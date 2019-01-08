@@ -38,7 +38,10 @@ class RecipesController extends Controller
     public function store(Request $request)
     {
         Recipe::create($request->validate([
-            'title' => ['required', 'max:255']
+            'title' => ['required', 'max:255'],
+            'description' => 'nullable',
+            'note' => 'nullable',
+            'link' => ['nullable', 'url']
         ]));
 
         return redirect('/recipes');
@@ -52,7 +55,7 @@ class RecipesController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        return view('recipes.show', compact('recipe'));
     }
 
     /**
@@ -63,7 +66,7 @@ class RecipesController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        //
+        return view('recipes.edit');
     }
 
     /**
