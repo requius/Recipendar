@@ -14,5 +14,11 @@
         <p>{{ $recipe->description }}</p>
         <p>{{ $recipe->note }}</p>
         <a href="{{ $recipe->link }}">{{ $recipe->link }}</a>
+
+        <form action="/recipes/{{ $recipe->id }}" method="post">
+            @method('DELETE')
+            @csrf
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
     </div>
 @endsection

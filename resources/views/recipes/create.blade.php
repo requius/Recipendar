@@ -9,7 +9,10 @@
             @csrf
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" name="title" placeholder="Name of the amazing dish!" required value="{{ old('title') }}">
+                <input type="text" class="form-control" name="title" placeholder="Name of the amazing dish!"  value="{{ old('title') }}">
+                @if ($errors->has('title'))
+                    <a class="text-danger">{{ $errors->first('title') }}</a>
+                @endif
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -25,14 +28,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="/recipes" class="btn btn-secondary" role="button" aria-pressed="true">Cancel</a>
-
-            <div class="notifications">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
         </form>
     </div>
 @endsection

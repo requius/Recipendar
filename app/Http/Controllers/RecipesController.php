@@ -37,12 +37,20 @@ class RecipesController extends Controller
      */
     public function store(Request $request)
     {
-        Recipe::create($request->validate([
-            'title' => ['required', 'max:255'],
-            'description' => 'nullable',
-            'note' => 'nullable',
-            'link' => ['nullable', 'url']
-        ]));
+        $validated = $request->validate(
+            [
+                'title' => ['required', 'min:3', 'max:255'],
+                'description' => 'nullable',
+                'note' => 'nullable',
+                'link' => ['nullable', 'url']
+            ],
+            [
+                'title.required' => 'A Title is required',
+                'title.min' => 'The Title must contains more than 3 characters'
+            ]
+        );
+
+        Recipe::create($validated);
 
         return redirect('/recipes');
     }
@@ -66,7 +74,7 @@ class RecipesController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        return view('recipes.edit');
+        return view('recipes.edit', compact('recipe'));
     }
 
     /**
@@ -78,7 +86,20 @@ class RecipesController extends Controller
      */
     public function update(Request $request, Recipe $recipe)
     {
-        //
+        $validated = $request->validate(
+            [
+                'title' => ['required', 'min:3', 'max:255'],
+                'description' => 'nullable',
+                'note' => 'nullable',
+                'link' => ['nullable', 'url']
+            ],
+            [
+                'title.required' => 'A Title is required',
+                'title.min' => 'The Title must contains more than 3 characters'
+            ]
+        );
+
+        return redirect('/recipes/' . $recipe->id);
     }
 
     /**
@@ -89,6 +110,8 @@ class RecipesController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        //
+        $recipe->delete();
+
+        return redirect('/recipes');
     }
 }
