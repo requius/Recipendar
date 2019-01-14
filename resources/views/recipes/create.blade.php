@@ -29,5 +29,20 @@
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="/recipes" class="btn btn-secondary" role="button" aria-pressed="true">Cancel</a>
         </form>
+
+        @if ($errors->any())
+            <ul>
+                @foreach ($errors as $error)
+                    <li>
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+        <ul>
+            @foreach($ingredients as $ingredient)
+                <li>{{ $ingredient->name }}</li>
+            @endforeach
+        </ul>
     </div>
 @endsection

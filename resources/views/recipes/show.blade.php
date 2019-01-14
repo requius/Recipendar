@@ -19,6 +19,7 @@
             @method('DELETE')
             @csrf
             <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="/recipes" class="btn btn-secondary" role="button" aria-pressed="true">Back to list</a>
         </form>
     </div>
 @endsection

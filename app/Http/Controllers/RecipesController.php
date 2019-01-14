@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Recipe;
+use App\Ingredient;
 use Illuminate\Http\Request;
 
 class RecipesController extends Controller
@@ -26,7 +27,9 @@ class RecipesController extends Controller
      */
     public function create()
     {
-        return view('recipes.create');
+        $ingredients = Ingredient::all();
+
+        return view('recipes.create', compact('ingredients'));
     }
 
     /**
@@ -46,7 +49,8 @@ class RecipesController extends Controller
             ],
             [
                 'title.required' => 'A Title is required',
-                'title.min' => 'The Title must contains more than 3 characters'
+                'title.min' => 'The Title must contains more than 3 characters',
+                'link.url' => 'Must be a url link'
             ]
         );
 
@@ -98,6 +102,8 @@ class RecipesController extends Controller
                 'title.min' => 'The Title must contains more than 3 characters'
             ]
         );
+
+        $recipe->update($validated);
 
         return redirect('/recipes/' . $recipe->id);
     }
